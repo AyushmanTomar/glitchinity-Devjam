@@ -5,6 +5,10 @@
     font-family: 'Roboto', sans-serif;
 }
 
+a {
+    text-decoration: none;
+}
+
 body {
     background-color: #f0f4f8;
 }
@@ -91,7 +95,8 @@ body {
     cursor: pointer;
 }
 
-.conversation, .conversation-list li {
+.conversation,
+.conversation-list li {
     background-color: #ffffff;
     padding: 12px;
     border-radius: 8px;
@@ -106,7 +111,8 @@ body {
     font-size: 14px;
 }
 
-.conversation:hover, .conversation-list li:hover {
+.conversation:hover,
+.conversation-list li:hover {
     background-color: #f0f4ff;
 }
 
@@ -133,7 +139,8 @@ body {
     border-top: 1px solid #e3e8f1;
 }
 
-.settings-box, .user-box {
+.settings-box,
+.user-box {
     border: 1px solid #e3e8f1;
     border-radius: 15px;
     padding: 10px 15px;
@@ -144,13 +151,15 @@ body {
     transition: all 0.2s ease;
 }
 
-.settings-box i, .user-box i {
+.settings-box i,
+.user-box i {
     color: #545B70;
     margin-right: 8px;
     font-size: 18px;
 }
 
-.settings-box:hover, .user-box:hover {
+.settings-box:hover,
+.user-box:hover {
     background-color: #f0f4ff;
     cursor: pointer;
 }
@@ -219,7 +228,8 @@ body {
     border: none;
     padding: 10px 20px;
     border-radius: 20px;
-    margin-top: 20px;
+    margin-top: 10px;
+    margin-bottom: 20px;
     color: #3c77ff;
     font-size: 14px;
     cursor: pointer;
@@ -262,7 +272,8 @@ body {
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    margin-top: 50px; /* Adjust the top margin as needed */
+    margin-top: 50px;
+    /* Adjust the top margin as needed */
 }
 
 /* Styling for the icon boxes */
@@ -288,12 +299,15 @@ body {
 }
 
 .icon-box:hover {
-    transform: scale(1.05); /* Zoom effect on hover */
+    transform: scale(1.05);
+    /* Zoom effect on hover */
 }
 
 .icon-image {
-    width: 180px;  /* Adjust the size as needed */
-    height: 200px; /* Adjust the size as needed */
+    width: 180px;
+    /* Adjust the size as needed */
+    height: 200px;
+    /* Adjust the size as needed */
 }
 
 .conversation-list {
@@ -314,6 +328,38 @@ body {
     color: #3C77FF;
     cursor: pointer;
     margin-left: auto;
+}
+
+
+.chat-box {
+    width: 100%;
+    flex-grow: 1;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    color: #545B70;
+    font-size: 16px;
+    overflow-y: auto;
+    padding: 0;
+    /* Remove padding for the textarea */
+}
+
+/* Textarea inside the chat box */
+.chat-textarea {
+    width: 100%;
+    /* height: 100%; */
+    border: none;
+    border-radius: 10px;
+    outline: none;
+    padding: 20px;
+    font-size: 16px;
+    color: #545B70;
+    background-color: #fff;
+    resize: none;
+    /* Prevent resizing */
+    box-shadow: none;
+    /* No box shadow for the textarea */
 }
 
 

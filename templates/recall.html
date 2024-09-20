@@ -14,10 +14,10 @@
         <aside class="sidebar">
             <div class="logo">
                 <img src="{{ url_for('static', filename='images/logo.png') }}" alt="MemorAI Logo">
-                <h1>memorAI</h1>
+                <a href="/"><h1>MemorAI</h1></a>
             </div>
             <div class="new-memory-bar">
-                <button class="new-memory">
+                <button class="new-memory" onclick="window.location.href='/update'">
                     <i class="fas fa-plus"></i> New Memory
                 </button>
                 <i class="fas fa-search search-icon"></i>
@@ -59,11 +59,14 @@
 
         <!-- Main Content -->
         <main class="main-content">
-            <h2>Query your MemorAI</h2>
-            <div class="response-box">
-                <div class="response-content"></div>
+            <h2 style="align-self: flex-start; margin-left: 10px;">Query your MemorAI</h2>
+            <div class="chat-box">
+                <!-- Empty textarea for new memory -->
+                <div class="chat-textarea"></div>
             </div>
+            {% if response %}
             <button class="regenerate-response">Regenerate response</button>
+            {% endif %}
             <div class="message-input">
                 <input type="text" placeholder="What's on your mind?...">
                 <button class="send-button"><i class="fas fa-paper-plane"></i></button>

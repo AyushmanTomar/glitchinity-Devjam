@@ -1,6 +1,49 @@
-/* DEOXY Was Here */
+.nav-bar{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: row;
+    height: 70px;
+    padding: 10px 20px;
+    position: fixed;
+    width: 100%;
+    top: 0px;
+}
+.logo{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+}
+a{
+    text-decoration: none;
+    color:whitesmoke;
+}
+
+.links{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 50px;
+}
+
+.links a{
+    color: white;
+    font-weight: 600;
+}
+.left{
+    width: 60%;
+    padding: 10px 20px;
+    box-sizing: border-box;
+    display: flex;
+    /* align-items: center; */
+    flex-direction: column;
+}
+.right{
+    width: 40%;
+}
 .form {
-    --background: #B9D8FF;
+    --background: #b9d8ffa3;
     --input-focus: #2d8cf0;
     --font-color: #323232;
     --font-color-sub: #666;
@@ -117,4 +160,24 @@
 .icon {
     width: 1.5rem;
     height: 1.5rem;
+}
+
+
+body {
+	background: linear-gradient(-45deg,  #ef745c ,#34073d , #145277 , #65a5a1 );
+	background-size: 400% 400%;
+	animation: gradient 15s ease infinite;
+	height: 100vh;
+}
+
+@keyframes gradient {
+	0% {
+		background-position: 0% 50%;
+	}
+	50% {
+		background-position: 100% 50%;
+	}
+	100% {
+		background-position: 0% 50%;
+	}
 }

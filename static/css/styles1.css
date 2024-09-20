@@ -20,7 +20,8 @@ body {
     padding: 30px 20px;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    /* justify-content: space-between; */
+    /* gap: 20px; */
     box-shadow: 2px 0 10px rgba(0, 0, 0, 0.05);
     border-right: 1px solid #e3e8f1;
 }
@@ -120,6 +121,9 @@ body {
     font-size: 14px;
     color: #9096A1;
 }
+a{
+    text-decoration: none;
+}
 
 .disabled {
     color: #C7CED9;
@@ -128,7 +132,7 @@ body {
 
 /* Footer with settings and user box styling */
 .footer {
-    padding-top: 20px;
+    padding-top: 100px;
     border-top: 1px solid #e3e8f1;
 }
 
@@ -265,3 +269,5 @@ body {
     resize: none; /* Prevent resizing */
     box-shadow: none; /* No box shadow for the textarea */
 }
+
+

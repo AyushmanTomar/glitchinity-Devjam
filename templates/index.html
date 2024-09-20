@@ -9,12 +9,18 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 </head>
 <body>
+    <div class="d-flex flex-column justify-content-center w-100 h-100"></div>
+
+        <div class="d-flex flex-column justify-content-center align-items-center">
+            
+        </div>
+    </div>
     <div class="container">
         <!-- Sidebar -->
         <aside class="sidebar">
             <div class="logo">
                 <img src="{{ url_for('static', filename='images/logo.png') }}" alt="MemorAI Logo">
-                <h1>memorAI</h1>
+                <a href="/"><h1>MemorAI</h1></a>
             </div>
             <div class="conversations">
                 <p class="conversation-title">
@@ -51,12 +57,12 @@
         <main class="main-content center-content">
             <div class="icon-boxes">
                 <!-- Update Memory Button -->
-                <a href="share.html" class="icon-box">
+                <a href="/update" class="icon-box">
                     <img src="{{ url_for('static', filename='images/image1.png') }}" alt="Update Memory Icon" class="icon-image">
                 </a>
 
                 <!-- Recall Button -->
-                <a href="index.html" class="icon-box">
+                <a href="/recall" class="icon-box">
                     <img src="{{ url_for('static', filename='images/image2.png') }}" alt="Recall Icon" class="icon-image">
                 </a>
             </div>
