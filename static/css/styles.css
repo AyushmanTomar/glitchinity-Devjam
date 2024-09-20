@@ -20,7 +20,7 @@ body {
     padding: 30px 20px;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    /* justify-content: space-between; */
     box-shadow: 2px 0 10px rgba(0, 0, 0, 0.05);
     border-right: 1px solid #e3e8f1;
 }
@@ -128,6 +128,7 @@ body {
 
 /* Footer with settings and user box styling */
 .footer {
+    margin-top: 100px;
     padding-top: 20px;
     border-top: 1px solid #e3e8f1;
 }
@@ -291,8 +292,8 @@ body {
 }
 
 .icon-image {
-    width: 150px;  /* Adjust the size as needed */
-    height: 150px; /* Adjust the size as needed */
+    width: 180px;  /* Adjust the size as needed */
+    height: 200px; /* Adjust the size as needed */
 }
 
 .conversation-list {

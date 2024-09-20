@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Main Page - MemorAI</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>MemorAI</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 </head>
@@ -13,10 +13,9 @@
         <!-- Sidebar -->
         <aside class="sidebar">
             <div class="logo">
-                <img src="logo.jpg" alt="MemorAI Logo">
+                <img src="{{ url_for('static', filename='images/logo.png') }}" alt="MemorAI Logo">
                 <h1>memorAI</h1>
             </div>
-
             <div class="conversations">
                 <p class="conversation-title">
                     Your conversations
@@ -41,7 +40,7 @@
                     <i class="fas fa-cog"></i> Settings
                 </div>
                 <div class="user-box">
-                    <img src="user.png" alt="User Image" class="user-profile-photo">
+                    <img src="{{ url_for('static', filename='images/profile.png') }}" alt="User Image" class="user-profile-photo">
                     <p class="user-name">user</p>
                     <i class="fas fa-sign-out-alt"></i>
                 </div>
@@ -53,12 +52,12 @@
             <div class="icon-boxes">
                 <!-- Update Memory Button -->
                 <a href="share.html" class="icon-box">
-                    <img src="image1.png" alt="Update Memory Icon" class="icon-image">
+                    <img src="{{ url_for('static', filename='images/image1.png') }}" alt="Update Memory Icon" class="icon-image">
                 </a>
 
                 <!-- Recall Button -->
                 <a href="index.html" class="icon-box">
-                    <img src="image2.png" alt="Recall Icon" class="icon-image">
+                    <img src="{{ url_for('static', filename='images/image2.png') }}" alt="Recall Icon" class="icon-image">
                 </a>
             </div>
         </main>

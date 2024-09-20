@@ -3,17 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MemorAI Dashboard</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>MemorAI-Recall</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='images/logo.png') }}" type="image/x-icon">
 </head>
 <body>
     <div class="container">
-        <!-- Sidebar -->
         <aside class="sidebar">
             <div class="logo">
-                <img src="logo.jpg" alt="MemorAI Logo">
+                <img src="{{ url_for('static', filename='images/logo.png') }}" alt="MemorAI Logo">
                 <h1>memorAI</h1>
             </div>
             <div class="new-memory-bar">
@@ -50,7 +50,7 @@
                     <i class="fas fa-cog"></i> Settings
                 </div>
                 <div class="user-box">
-                    <img src="user.png" alt="User Image" class="user-profile-photo">
+                    <img src="{{ url_for('static', filename='images/profile.png') }}" alt="User Image" class="user-profile-photo">
                     <p class="user-name">Semzer</p>
                     <i class="fas fa-sign-out-alt"></i>
                 </div>
