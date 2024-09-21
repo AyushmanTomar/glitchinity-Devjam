@@ -2,6 +2,7 @@ from flask import Flask,render_template,request,jsonify
 from auth import auth_bp,jwt_is_required
 import memorai
 from memorai import ask_model
+from memorai import upload_experience
 app = Flask(__name__)
 app.register_blueprint(auth_bp)
 
@@ -22,10 +23,8 @@ def retrieve():
 @app.route('/recallmemory',methods=['POST'])
 @jwt_is_required
 def recall_():
-    error = None
     query = request.form['memory']
     memory= ask_model(query)
-    print (memory)
     return jsonify({'memory': memory})
 
 # for updating the data base with new memory
@@ -33,6 +32,12 @@ def recall_():
 @jwt_is_required
 def update():
     return render_template('update.html',error = None)
+
+@app.route('/updatememory',methods=['POST'])
+def update_():
+    exp = request.form['memory']
+    exp= upload_experience(exp)
+    return jsonify({'memory': exp})
 
 
 
