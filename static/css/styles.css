@@ -28,11 +28,44 @@ body {
     box-shadow: 2px 0 10px rgba(0, 0, 0, 0.05);
     border-right: 1px solid #e3e8f1;
 }
+.sidebar {
+    /* background-color: #f8faff; */
+    width: 260px;
+    padding: 30px 20px;
+    display: flex;
+    flex-direction: column;
+    /* justify-content: space-between; */
+    /* gap: 20px; */
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.05);
+    border-right: 1px solid #e3e8f1;
+}
+.sidebar {
+	background: linear-gradient(-45deg,  #ef745c ,#34073d , #145277 , #65a5a1 );
+	background-size: 400% 400%;
+	animation: gradient 15s ease infinite;
+	
+}
+@keyframes gradient {
+	0% {
+		background-position: 0% 50%;
+	}
+	50% {
+		background-position: 100% 50%;
+	}
+	100% {
+		background-position: 0% 50%;
+	}
+}
+
+
 
 .logo {
     display: flex;
     align-items: center;
     margin-bottom: 30px;
+}
+.logo  a h1{
+    color: white;
 }
 
 .logo img {
@@ -361,5 +394,32 @@ body {
     box-shadow: none;
     /* No box shadow for the textarea */
 }
+.user-box p{
+    color: white;
+}
+.user-box i{
+    color: white;
+}
 
+.settings-box:hover i{
+    color: #333;
+}
 
+.settings-box i{
+    color: white;
+}
+
+.settings-box p{
+    color: white;
+}
+
+.settings-box:hover p{
+    color: #545B70;
+}
+
+.user-box:hover p{
+    color: #545B70;
+}
+.user-box:hover i{
+    color: #545B70;
+}
