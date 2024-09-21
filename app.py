@@ -1,6 +1,7 @@
 from flask import Flask,render_template,request,jsonify
 from auth import auth_bp
-# import memorai
+import memorai
+from memorai import ask_model
 app = Flask(__name__)
 app.register_blueprint(auth_bp)
 
@@ -17,17 +18,20 @@ def signin():
 def retrieve():
     return render_template('recall.html',response=None)
 
+@app.route('/recallmemory',methods=['POST'])
+def recall_():
+    error = None
+    query = request.form['memory']
+    memory= ask_model(query)
+    print (memory)
+    return jsonify({'memory': memory})
+
 # for updating the data base with new memory
 @app.route('/update')
 def update():
     return render_template('update.html',error = None)
 
-@app.route('/updatememory',methods=['POST'])
-def update_():
-    error = None
-    memory = request.form['memory']
-    print (memory)
-    return jsonify({'memory': memory})
+
 
 #768
 

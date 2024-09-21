@@ -6,3 +6,7 @@ requests
 langchain-ollama
 langchain_community
 langchain_core
+google-auth
+google-auth-oauthlib
+google-auth-httplib2
+PyJWT

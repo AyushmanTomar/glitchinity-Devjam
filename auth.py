@@ -11,7 +11,7 @@ import google.auth.transport.requests
 from functools import wraps  # To preserve original function names
 from dotenv import load_dotenv
 
-load_dotenv();
+load_dotenv()
 
 app = Flask("Google Login App")
 app.secret_key = os.getenv("GOOGLE_CLIENT_SECRET")  # For JWT signing
@@ -108,7 +108,6 @@ def callback():
     # Set JWT token in cookies
     response = make_response(redirect("/"))
     response.set_cookie("cookie", jwt_token, httponly=True)
-
     return response
 
 # Logout route

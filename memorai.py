@@ -47,7 +47,8 @@ def search_similar_documents(query):
 
 def get_response_to_post(input_text,query):
     text=""
-    for context in input_text
+    for context in input_text:
+        text=text+context
 
     prompt=ChatPromptTemplate.from_messages(
         [
@@ -58,12 +59,13 @@ def get_response_to_post(input_text,query):
     llm=Ollama(model="llama3.1")
     output_parser=StrOutputParser()
     chain=prompt|llm|output_parser
-    return(chain.invoke({"context":text},{"query":query}))
+    return(chain.invoke({"context": text, "query": query}))
 
 
-# input_text="what is factorial of 3?"
 
-# query = "when i met a dog"
-# print(search_similar_documents(query))
+def ask_model(query):
+    input_text=search_similar_documents(query)
+    return(get_response_to_post(input_text,query))
+
 # add_to_database(query)
 # add_to_database();
