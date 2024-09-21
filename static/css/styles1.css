@@ -312,3 +312,42 @@ a{
 }
 
 
+
+.message-box {
+	background: linear-gradient(-45deg,  #ef745c ,#34073d , #145277 , #65a5a1 );
+	background-size: 400% 400%;
+	animation: gradient 15s ease infinite;
+	
+}
+
+.message-box{
+    width: fit-content;
+    text-wrap: wrap;
+    height: fit-content;
+    max-width: 60%;
+    padding: 10px 20px;
+    border-radius: 20px;
+    color: white;
+    margin-top: 10px;
+    
+}
+
+.bot-message{
+    width: fit-content;
+    text-wrap: wrap;
+    height: fit-content;
+    max-width: 60%;
+    padding: 10px 20px;
+    border-radius: 20px;
+    color: white;
+    margin-top: 10px;
+    position: absolute;
+    right: 40px;
+    
+}
+.bot-message {
+	background: linear-gradient(-45deg,  #ef745c ,#34073d , #145277 , #65a5a1 );
+	background-size: 400% 400%;
+	animation: gradient 15s ease infinite;
+	
+}

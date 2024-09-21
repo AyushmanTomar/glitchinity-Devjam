@@ -24,6 +24,7 @@ def update():
 def update_():
     error = None
     memory = request.form['memory']
+    print (memory)
     return jsonify({'memory': memory})
 
 #768

@@ -72,8 +72,9 @@
         <main class="main-content">
             <h2 class="left-aligned">Share your Memory with me</h2>
             <div class="chat-box">
-                <div class="chat-textarea">
-                    <div class="message-box" id="message-box">{{memory}}</div>
+                <div class="chat-textarea" id="chat-textarea">
+                    <div class="message-box" id="message-box"></div>
+                    <div class="bot-message" id="bot-message"></div>
                 </div>
             </div>
             <form action="/updatememory" id="updateform" method="post" style="width: 100%;">
@@ -85,15 +86,33 @@
         </main>
     </div>
     <script>
+        document.getElementById('message-box').style.display = 'none'
+        document.getElementById('bot-message').style.display = 'none'
+        chat = []
+
+
         $(document).ready(function () {
             $('#updateform').on('submit', function (event) {
                 event.preventDefault();
+                const userInput = $('#memory').val();
+
+                // Add user message to chat array
+                chat.push({ type: 'user', message: userInput });
+
+                
+                // Display updated chat
+                displayChat();
                 $.ajax({
                     url: '/updatememory',
                     type: 'POST',
                     data: $(this).serialize(),
                     success: function (response) {
-                        $('#message-box').html('Memory: ' + response.memory);
+                        // Add response to chat array
+                        chat.push({ type: 'bot', message: response.memory });
+                        // Display updated chat
+                        displayChat();
+                        // Clear input field
+                        $('#memory').val('');
                     },
                     error: function (error) {
                         console.log('Error:', error);
@@ -101,6 +120,24 @@
                 });
             });
         });
+
+        function displayChat() {
+            const messageBox = $('#chat-textarea');
+            messageBox.empty(); // Clear existing messages
+            console.log(chat)
+            chat.forEach(item => {
+                const messageElement = $('<div>').addClass('message');
+                if (item.type === 'user') {
+                    messageElement.addClass('message-box').text(item.message);
+                } else {
+                    messageElement.addClass('bot-message').text(item.message);
+                }
+                messageBox.append(messageElement);
+            });
+
+            // Show message box and scroll to bottom
+            messageBox.show().scrollTop(messageBox[0].scrollHeight);
+        }
     </script>
 </body>
 
