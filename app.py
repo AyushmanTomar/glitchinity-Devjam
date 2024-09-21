@@ -1,4 +1,5 @@
 from flask import Flask,render_template,request,jsonify
+from auth import auth_bp
 # import memorai
 app = Flask(__name__)
 app.register_blueprint(auth_bp)
