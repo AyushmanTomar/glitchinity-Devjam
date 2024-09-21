@@ -13,14 +13,8 @@ from dotenv import load_dotenv
 load_dotenv()
 # mongo db details
 client = MongoClient(os.getenv("MONGO_URI"))
-# db = client["hello"]
 db=client["memory"]
-# collection = db["helloWorld"]
 collection = db["thoughts"]
-
-items = collection.find();
-# for i in items:
-#     print(i)
 
 
 e_model = SentenceTransformer('all-mpnet-base-v2')#all-MiniLM-L6-v2
@@ -28,49 +22,16 @@ e_model = SentenceTransformer('all-mpnet-base-v2')#all-MiniLM-L6-v2
 def create_embedding(text):
     embedding = e_model.encode(text)
     return embedding
-    
-# print(len(create_embedding("h")))
 
 def add_to_database(context):
-    # embedding = e_model.encode(text)
-
-    
-    # doc = {
-    #     "text": text,
-    #     "embedding": embedding.tolist()
-    # }
-    # collection.insert_one(doc)
     doc = {
         "context":context,
         "embedding":create_embedding(context).tolist(),
         "createdAt":datetime.utcnow()
     }
     result = collection.insert_one(doc)
-    # for doc in collection.find():
-    #     # new_data_set = {"age_embedding":create_embedding(doc['age'])}
-    #     # collection.update_one({"_id":doc["_id"]},{"$set":new_data_set})
-    #     print("works")
-    #     doc['age_embedding'] = create_embedding(doc['age']).tolist()
-    #     collection.replace_one({'_id':doc['_id']},doc)
 
 def search_similar_documents(query):
-    # Create query embedding
-    query_embedding = e_model.encode(query)
-    
-    # Search for similar documents
-    # results = collection.aggregate([
-    #     {
-    #         "$search": {
-    #             "index": "default",
-    #             "knnBeta": {
-    #                 "vector": query_embedding.tolist(),
-    #                 "path": "embedding",
-    #                 "k": k
-    #             }
-    #         }
-    #     }
-    # ])
-
     results = collection.aggregate([
         {"$vectorSearch":{
             "queryVector":create_embedding(query).tolist(),
