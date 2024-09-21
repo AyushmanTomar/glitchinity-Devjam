@@ -45,22 +45,25 @@ def search_similar_documents(query):
     return [doc["context"] for doc in results]
 
 
-# def get_response_to_post(input_text):
-#     prompt=ChatPromptTemplate.from_messages(
-#         [
-#             ("system","You are a helpful assistant. Please response to the user queries"),
-#             ("user","Question:{question}")
-#         ]
-#     )
-#     llm=Ollama(model="llama3.1")
-#     output_parser=StrOutputParser()
-#     chain=prompt|llm|output_parser
-#     return(chain.invoke({"question":input_text}))
+def get_response_to_post(input_text,query):
+    text=""
+    for context in input_text
+
+    prompt=ChatPromptTemplate.from_messages(
+        [
+            ("system","You are a helpful assistant. Please response to the user queries with reference to context if not found handel with appropriate output"),
+            ("user","Context: {context}\n\nQuestion: {query}\n\nAnswer:")
+        ]
+    )
+    llm=Ollama(model="llama3.1")
+    output_parser=StrOutputParser()
+    chain=prompt|llm|output_parser
+    return(chain.invoke({"context":text},{"query":query}))
 
 
 # input_text="what is factorial of 3?"
 
-# query = "dog"
+# query = "when i met a dog"
 # print(search_similar_documents(query))
 # add_to_database(query)
 # add_to_database();
