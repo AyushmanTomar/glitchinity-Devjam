@@ -1,5 +1,5 @@
 from flask import Flask,render_template,request,jsonify
-from auth import auth_bp,jwt_is_required
+from auth import auth_bp,jwt_is_required,getCookieInfo
 import memorai
 from memorai import ask_model
 from memorai import upload_experience
@@ -36,7 +36,9 @@ def update():
 @app.route('/updatememory',methods=['POST'])
 def update_():
     exp = request.form['memory']
-    exp= upload_experience(exp)
+    token = request.cookies.get('cookie')
+    user_info = getCookieInfo(token)
+    exp= upload_experience(exp,user_info['sub'])
     return jsonify({'memory': exp})
 
 

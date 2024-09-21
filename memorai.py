@@ -23,8 +23,12 @@ def create_embedding(text):
     embedding = e_model.encode(text)
     return embedding
 
-def add_to_database(context):
+def add_to_database(context,googleId):
+    # token = request.cookies.get('cookie')
+    # print(token,"in memorai.py")
+    # user_info = getCookieInfo(token)
     doc = {
+        "googleId":googleId,
         "context":context,
         "embedding":create_embedding(context).tolist(),
         "createdAt":datetime.utcnow()
@@ -83,10 +87,11 @@ def ask_model(query):
     input_text=search_similar_documents(query)
     return(get_response_to_post(input_text,query))
 
-def upload_experience(experience):
+def upload_experience(experience,googleId):
     experience=create_context(experience)
     print(experience)
-    add_to_database(experience)
+    add_to_database(experience,googleId)
     return("Experinece added!!")
 
 # upload_experience("my aunt scolded me tonight i felt very bad about it. i am nit hapy")
+# add_to_database("My name is Atharva from Pune and I am 20 years old, pursuing my BTech degree from Vellore Institute of Technology in Vellore","114324532461366092773")
