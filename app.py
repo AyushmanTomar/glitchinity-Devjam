@@ -1,6 +1,7 @@
 from flask import Flask,render_template,request,jsonify
-import memorai
+# import memorai
 app = Flask(__name__)
+app.register_blueprint(auth_bp)
 
 @app.route('/')
 def home():
