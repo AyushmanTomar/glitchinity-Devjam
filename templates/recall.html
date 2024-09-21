@@ -56,10 +56,9 @@
                     <p style="color: white;">Settings</p>
                 </div>
                 <div class="user-box">
-                    <img src="{{ url_for('static', filename='images/profile.png') }}" alt="User Image"
-                        class="user-profile-photo">
-                    <p class="user-name">Semzer</p>
-                    <i class="fas fa-sign-out-alt"></i>
+                    <img src="" alt="User Image" class="user-profile-photo">
+                    <p class="user-name">user</p>
+                    <i class="fas fa-sign-out-alt" onclick="window.location.href='/logout'"></i>
                 </div>
             </div>
         </aside>
@@ -135,6 +134,64 @@
             // Show message box and scroll to bottom
             messageBox.show().scrollTop(messageBox[0].scrollHeight);
         }
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/jwt-decode@3/build/jwt-decode.min.js"></script>
+    <script>
+        // Function to retrieve the cookie value
+        function getCookie(name) {
+            let nameEQ = name + "=";
+            let cookiesArray = document.cookie.split(';');
+            for (let i = 0; i < cookiesArray.length; i++) {
+                let cookie = cookiesArray[i].trim();
+                if (cookie.indexOf(nameEQ) == 0) {
+                    return cookie.substring(nameEQ.length, cookie.length);
+                }
+            }
+            return null;
+        }
+
+        // Function to decode JWT token
+        function parseJWT(token) {
+            let base64Url = token.split('.')[1]; // Get the payload part (second part of JWT)
+            let base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/'); // Adjust for base64 URL encoding
+            let jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
+                return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+            }).join(''));
+
+            return JSON.parse(jsonPayload); // Return the decoded JSON object
+        }
+
+        // Retrieve the JWT from the cookie and decode it
+        let jwtToken = getCookie('cookie'); // Replace 'cookie' with your actual cookie name
+        console.log(jwtToken, "jwt");
+
+        if (jwtToken) {
+            let decodedToken = parseJWT(jwtToken);
+            console.log(decodedToken); // Now you have the decoded JWT payload (claims)
+
+            // Get the first element with the class 'user-profile-photo'
+            let userProfileImg = document.getElementsByClassName('user-profile-photo')[0];
+
+            // Ensure the element exists and is an <img> tag
+            if (userProfileImg && userProfileImg.tagName === 'IMG') {
+                // Set the src attribute to the decoded picture URL
+                userProfileImg.src = decodedToken['picture'];
+            } else {
+                console.error("Element with class 'user-profile-photo' not found or is not an <img>.");
+            }
+
+            let username = document.getElementsByClassName('user-name')[0];
+            if(username){
+                username.textContent=decodedToken['name']
+            }
+            else{
+                console.error("Element username not found")
+            }
+        } else {
+            console.error("JWT token not found in the cookie.");
+        }
+
+
     </script>
 </body>
 

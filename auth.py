@@ -107,7 +107,9 @@ def callback():
 
     # Set JWT token in cookies
     response = make_response(redirect("/"))
-    response.set_cookie("cookie", jwt_token, httponly=True)
+    # response = make_response(redirect("/protected_area"))
+    # response.set_cookie("cookie", jwt_token, httponly=True) #Use this once website out for production
+    response.set_cookie('cookie',jwt_token)
     return response
 
 # Logout route
