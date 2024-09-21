@@ -30,7 +30,7 @@ def recall_():
 def update():
     return render_template('update.html',error = None)
 
-@app.route('/updatememory')
+@app.route('/updatememory',methods=['POST'])
 def update_():
     exp = request.form['memory']
     exp= upload_experience(exp)

@@ -68,7 +68,7 @@ def get_response_to_post(input_text,query):
 
     prompt = ChatPromptTemplate.from_messages(
     [
-        ("system", "You are a helpful assistant. Please respond to the user's queries with reference to the context. If the context is not found, handle it with an appropriate output. Describe the situation in good words and ending with a follow up question to assist further or a giving a greeting or asking more about the happened event."),
+        ("system", "You are a helpful assistant. Please respond to the user's queries with reference to the context. If the context is not found, handle it with an appropriate output. Describe the situation in good words and ending with a follow up question to assist further or a giving a greeting or asking more about the happened event. Do not answer any other query related to coding or any other stuff"),
         ("user", "Context: {context}\n\nQuestion: {query}\n\nAnswer: Based on the your memory provided, here is what i found:")
     ]
     )
