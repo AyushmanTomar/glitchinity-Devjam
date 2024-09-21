@@ -60,7 +60,7 @@ def search_similar_documents(query):
 
 # input_text="what is factorial of 3?"
 
-query = "dog"
-print(search_similar_documents(query))
+# query = "dog"
+# print(search_similar_documents(query))
 # add_to_database(query)
 # add_to_database();

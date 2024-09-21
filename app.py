@@ -17,9 +17,17 @@ def signin():
 def retrieve():
     return render_template('recall.html',response=None)
 
+# for updating the data base with new memory
 @app.route('/update')
 def update():
     return render_template('update.html',error = None)
+
+@app.route('/updatememory',methods=['POST'])
+def update_():
+    error = None
+    memory = request.form['memory']
+    print (memory)
+    return jsonify({'memory': memory})
 
 #768
 
