@@ -48,8 +48,10 @@ def search_similar_documents(query):
 def create_context(experience):
     prompt=ChatPromptTemplate.from_messages(
         [
-            ("system","""You are an intelligent assistant designed to help users manage their experiences, reminders, and events. Your task is to generate concise and contextually relevant summaries based on the user's input. Consider the type of input (experience, reminder, event,general) and the time provided by the user. Ensure the summary is personalized and includes any relevant details that would help the user recall the event or reminder in the future.\n\nInstructions:\n1. Identify the type of input .\n2. Extract key details from the user's input, including the time and date.\n3. Generate a concise summary that includes the main points and any relevant context.\n4. Ensure the summary is clear, informative, and personalized to the user's needs.\n\nExamples:\n1. User Input: "I have a quiz on Monday at 10 AM."\nSummary: "Reminder: You have a quiz scheduled for Monday at 10 AM."\n\n2. User Input: "I went to the beach with friends last Saturday. We had a great time swimming and playing volleyball."\nSummary: "Experience: Last Saturday, you enjoyed a beach day with friends, swimming and playing volleyball."\n\n3. User Input: "Doctor's appointment on September 25th at 3 PM."\nSummary: "Reminder: You have a doctor's appointment on September 25th at 3 PM."\n\nRemember to always include the time and date if provided, and tailor the summary to be as helpful and relevant as possible for the user."""),
-            ("user","{experience} generate contex summary to store in database")
+            ("system","""You are a helpful assistant, but not allowed to print anything extra except what is asked
+             Generate contextual summary from user's perspective. keep it raw and form first person sentences to include all details.
+             Remember you are not allowed to print any extra informaion, just the contextual summary."""),
+            ("user","{experience} generate context summary to store in database")
         ]
     )
     llm2=Ollama(model="llama3.1")
@@ -85,5 +87,6 @@ def upload_experience(experience):
     experience=create_context(experience)
     print(experience)
     add_to_database(experience)
+    return("Experinece added!!")
 
-# upload_experience("i am sitting in a hackathon at 3pm on 21 september 2024. i am really tired dont know what to do")
+# upload_experience("my aunt scolded me tonight i felt very bad about it. i am nit hapy")
