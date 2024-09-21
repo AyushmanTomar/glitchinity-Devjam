@@ -67,17 +67,26 @@
         <main class="main-content">
             <h2 class="left-aligned">Query your MemorAI</h2>
             <div class="chat-box">
-                <div class="chat-textarea" id="chat-textarea">
+                <div class="chat-textarea" id="chat-textarea" style="height: fit-content;">
                     <div class="message-box" id="message-box"></div>
                     <div class="bot-message" id="bot-message"></div>
                 </div>
-            </div>
-            <form action="/recallmemory" id="updateform" method="post" style="width: 100%;">
-                <div class="message-input">
-                    <input type="text" placeholder="What's on your mind?..." id="memory" name="memory">
-                    <button class="send-button" type="submit"><i class="fas fa-paper-plane"></i></button>
+                <div class="loader" style="margin-top: 50px;">
+                    
                 </div>
-            </form>
+            </div>
+            <div class="" style="display: flex; width: 100%; justify-content: space-around;">
+                <form action="/recallmemory" id="updateform" method="post" style="width: 100%;">
+                    <div class="message-input">
+                        <input type="text" placeholder="What's on your mind?..." id="memory" name="memory">
+                        <button class="send-button" type="submit"><i class="fas fa-paper-plane"></i></button>
+                    </div>
+
+                </form>
+                <button id="start-btn" class="btn btn-danger btn-block"
+                    style="width:100px; border-radius: 30px; border: none; box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.1); background-color: rgb(80, 80, 254);"><img
+                        src="{{url_for('static',filename='images/mic.png')}}" alt="" width="30px"></button>
+            </div>
         </main>
     </div>
     <script>
@@ -120,7 +129,7 @@
             const messageBox = $('#chat-textarea');
             messageBox.empty(); // Clear existing messages
             chat.forEach(item => {
-                let chatrow =  $('<div>').addClass('chat-row');
+                let chatrow = $('<div>').addClass('chat-row');
                 const messageElement = $('<div>').addClass('message');
                 if (item.type === 'user') {
                     messageElement.addClass('message-box').text(item.message);
@@ -154,7 +163,7 @@
         function parseJWT(token) {
             let base64Url = token.split('.')[1]; // Get the payload part (second part of JWT)
             let base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/'); // Adjust for base64 URL encoding
-            let jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
+            let jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {
                 return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
             }).join(''));
 
@@ -181,10 +190,10 @@
             }
 
             let username = document.getElementsByClassName('user-name')[0];
-            if(username){
-                username.textContent=decodedToken['name']
+            if (username) {
+                username.textContent = decodedToken['name']
             }
-            else{
+            else {
                 console.error("Element username not found")
             }
         } else {
@@ -193,6 +202,7 @@
 
 
     </script>
+    <script src="{{ url_for('static', filename='js/textspeech.js') }}"></script>
 </body>
 
 </html>

@@ -9,6 +9,7 @@ import requests
 import json
 from datetime import datetime
 from dotenv import load_dotenv
+from imageai import get_caption
 
 load_dotenv()
 # mongo db details
@@ -23,12 +24,8 @@ def create_embedding(text):
     embedding = e_model.encode(text)
     return embedding
 
-def add_to_database(context,googleId):
-    # token = request.cookies.get('cookie')
-    # print(token,"in memorai.py")
-    # user_info = getCookieInfo(token)
+def add_to_database(context):
     doc = {
-        "googleId":googleId,
         "context":context,
         "embedding":create_embedding(context).tolist(),
         "createdAt":datetime.utcnow()
@@ -42,7 +39,7 @@ def search_similar_documents(query):
             "queryVector":create_embedding(query).tolist(),
             "path":"embedding",
             "numCandidates":300,
-            "limit":2,
+            "limit":3,
             "index":"default"
         }}
     ])
@@ -67,12 +64,14 @@ def create_context(experience):
 
 def get_response_to_post(input_text,query):
     text=""
+    i=1
     for context in input_text:
-        text=text+context
-
+        text="context"+str(i)+"-"+text+context+"\n"
+        i+=1
+    print(text)
     prompt = ChatPromptTemplate.from_messages(
     [
-        ("system", "You are a helpful assistant. Please respond to the user's queries with reference to the context. If the context is not found, handle it with an appropriate output. Describe the situation in good words and ending with a follow up question to assist further or a giving a greeting or asking more about the happened event. Do not answer any other query related to coding or any other stuff"),
+        ("system", "You are a helpful assistant. Please respond to the user's queries with reference to the context.Select the most relevant context and answer the question. If the related context is not found, handle it with an appropriate output. Describe the situation in good words and ending with a follow up question to assist further or a giving a greeting or asking more about the happened event. Do not answer any other query related to coding or any other stuff"),
         ("user", "Context: {context}\n\nQuestion: {query}\n\nAnswer: Based on the your memory provided, here is what i found:")
     ]
     )
@@ -87,11 +86,12 @@ def ask_model(query):
     input_text=search_similar_documents(query)
     return(get_response_to_post(input_text,query))
 
-def upload_experience(experience,googleId):
+def upload_experience(experience):
     experience=create_context(experience)
     print(experience)
-    add_to_database(experience,googleId)
+    add_to_database(experience)
     return("Experinece added!!")
 
+
+
 # upload_experience("my aunt scolded me tonight i felt very bad about it. i am nit hapy")
-# add_to_database("My name is Atharva from Pune and I am 20 years old, pursuing my BTech degree from Vellore Institute of Technology in Vellore","114324532461366092773")

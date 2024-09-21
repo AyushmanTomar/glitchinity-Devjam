@@ -10,17 +10,11 @@ from pip._vendor import cachecontrol
 import google.auth.transport.requests
 from functools import wraps  # To preserve original function names
 from dotenv import load_dotenv
-from pymongo import MongoClient
-import pymongo
+
 load_dotenv()
 
 app = Flask("Google Login App")
 app.secret_key = os.getenv("GOOGLE_CLIENT_SECRET")  # For JWT signing
-
-client = MongoClient(os.getenv("MONGO_URI"))
-db=client["memory"]
-collection = db["thoughts"]
-user_collection = db["users"]
 
 auth_bp = Blueprint('auth',__name__)
 
@@ -85,21 +79,6 @@ def jwt_is_required(function):
     
     return wrapper
 
-def getCookieInfo(token):
-    if not token:
-        return jsonify({"msg": "Missing token"}), 401
-    
-    try:
-        # Decode the JWT using the secret key
-        user_info = jwt.decode(token, JWT_SECRET_KEY, algorithms=["HS256"])
-        print(user_info)  # This will print the decoded user info
-        return jsonify({"message":user_info})
-    except jwt.ExpiredSignatureError:
-        return jsonify({"msg": "Token has expired"}), 401
-    except jwt.InvalidTokenError:
-        return jsonify({"msg": "Invalid token"}), 401
-
-
 # Google OAuth login route
 @auth_bp.route("/googleLogin")
 def googleLogin():
@@ -126,10 +105,6 @@ def callback():
     # Generate JWT token after successful login
     jwt_token = generate_jwt(id_info)
 
-    check = user_collection.find_one({'sub':id_info['sub']})
-    print(check)
-    if(check==None):
-       user_collection.insert_one(id_info)
     # Set JWT token in cookies
     response = make_response(redirect("/"))
     # response = make_response(redirect("/protected_area"))
@@ -163,15 +138,6 @@ def protected_area():
 @jwt_is_required
 def check_jwt_token():
     return jsonify({"message": "JWT token is valid!"})
-
-@auth_bp.route("/printToken")
-@jwt_is_required
-def printToken():
-    token = request.cookies.get('cookie')
-    print(token)
-    return getCookieInfo(token)
-
-
 
 if __name__ == "__main__":
     app.run(debug=True)

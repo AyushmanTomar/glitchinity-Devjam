@@ -10,3 +10,7 @@ google-auth
 google-auth-oauthlib
 google-auth-httplib2
 PyJWT
+transformers
+torch
+torchvision
+pillow
