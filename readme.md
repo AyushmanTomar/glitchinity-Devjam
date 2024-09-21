@@ -3,7 +3,7 @@
 MemorAI is your personal AI assistant that never forgets. It's a memory augmentation tool designed to store, recall, and interact with your memories effortlessly. Using the latest advancements in AI and machine learning, MemorAI ensures that your important thoughts, ideas, and information are always at your fingertips.
 
 ## Sample Images
-![alt text]([https://github.com/AyushmanTomar/blob/[branch]/image.jpg?raw=true](https://github.com/AyushmanTomar/glitchinity-Devjam/blob/main/demo/homepage.png?raw=true))
+![alt text]([https://github.com/AyushmanTomar/blob/[branch]/image.jpg?raw=true]))
 
 ## Features
 
