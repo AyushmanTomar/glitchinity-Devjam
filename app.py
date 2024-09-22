@@ -14,6 +14,10 @@ app.register_blueprint(auth_bp)
 def home():
     return render_template('index.html')
 
+@app.route('/community')
+def community():
+    return render_template('community.html',error=None)
+
 
 @app.route('/login')
 def signin():
