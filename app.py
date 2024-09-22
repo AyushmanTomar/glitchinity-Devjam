@@ -1,4 +1,4 @@
-from flask import Flask,render_template,request,jsonify
+from flask import Flask,render_template,request,jsonify, redirect
 from auth import auth_bp,getCookieInfo
 import memorai
 from memorai import ask_model
@@ -25,6 +25,9 @@ def save_data(data):
 
 @app.route('/')
 def home():
+    token = request.cookies.get('cookie')
+    if(token==None):
+        redirect("/login")
     return render_template('index.html')
 
 @app.route('/community')
