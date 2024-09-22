@@ -5,6 +5,8 @@ var recognition = new speechRecognition()
 var textbox = $("#memory")
 var instructions = $("#instructions")
 var startButton = $("#start-btn")
+var postbtn = $("#post-btn")
+
 
 var content = ''
 var isRecognitionActive = false
@@ -49,3 +51,8 @@ startButton.click(function (event) {
 textbox.on('input', function () {
     content = $(this).val()
 })
+
+postbtn.click(function (event) {
+    content="/post "
+    textbox.val(content)
+    })
