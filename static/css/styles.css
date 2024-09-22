@@ -43,7 +43,7 @@ body {
 	background: linear-gradient(-45deg,  #ef745c ,#34073d , #145277 , #65a5a1 );
 	background-size: 400% 400%;
 	animation: gradient 15s ease infinite;	
-    
+
 }
 @keyframes gradient {
 	0% {
@@ -194,7 +194,7 @@ body {
 .settings-box:hover,
 .user-box:hover {
     background-color: #f0f4ff;
-    cursor: pointer;
+    cursor: pointer;   
 }
 
 .settings-box {
