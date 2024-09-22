@@ -30,7 +30,13 @@ def home():
     if(token==None):
         print("check")
         return redirect(url_for("signin"))
+    token = request.cookies.get('cookie')
+    print(token)
+    if(token==None):
+        print("check")
+        return redirect(url_for("signin"))
     return render_template('index.html')
+        
 
 @app.route('/community')
 def community():
