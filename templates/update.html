@@ -72,7 +72,8 @@
             <h2 class="left-aligned">Share your Memory with me</h2>
             <div class="chat-box">
                 <div class="chat-textarea" id="chat-textarea">
-                    <div class="message-box" id="message-box"></div>
+                    <div class="message-box" id="message-box"><img id="imageDisplay" width="300" style="display:none;">
+                    </div>
                     <div class="bot-message" id="bot-message"></div>
                 </div>
             </div>
@@ -82,9 +83,11 @@
                     <div class="message-input">
                         <input type="text" placeholder="What's on your mind?..." id="memory" name="memory">
                         <button class="send-button" type="submit"><i class="fas fa-paper-plane"></i></button>
-                        <!-- <label for="file" class="send-button" style="margin-left: 10px; cursor: pointer;"><i class="fa fa-upload" aria-hidden="true"></i></label> -->
+                        <label for="file" class="send-button" style="margin-left: 10px; cursor: pointer;"><i
+                                class="fa fa-upload" aria-hidden="true"></i></label>
                     </div>
-                    <input type="file" name="file" id="file" accept=".png">
+                    <input type="file" name="file" id="file" accept="image/*" style="display: none;"
+                        onchange="displayImage(event)">
                 </form>
 
                 <button id="start-btn" class="btn btn-danger btn-block"
@@ -97,7 +100,12 @@
         document.getElementById('message-box').style.display = 'none'
         document.getElementById('bot-message').style.display = 'none'
         chat = []
-
+        function displayImage(event) {
+            document.getElementById('message-box').style.display = 'flex'
+            var image = document.getElementById('imageDisplay');
+            image.src = URL.createObjectURL(event.target.files[0]);
+            image.style.display = 'block';
+        }
 
         $(document).ready(function () {
             $('#updateform').on('submit', function (event) {
@@ -136,16 +144,17 @@
 
         function displayChat() {
             const messageBox = $('#chat-textarea');
-            messageBox.empty(); // Clear existing messages
-            console.log(chat)
+            // messageBox.empty(); // Clear existing messages
             chat.forEach(item => {
+                let chatrow = $('<div>').addClass('chat-row');
                 const messageElement = $('<div>').addClass('message');
                 if (item.type === 'user') {
                     messageElement.addClass('message-box').text(item.message);
                 } else {
                     messageElement.addClass('bot-message').text(item.message);
                 }
-                messageBox.append(messageElement);
+                chatrow.append(messageElement)
+                messageBox.append(chatrow);
             });
 
             // Show message box and scroll to bottom

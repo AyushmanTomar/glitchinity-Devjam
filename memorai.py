@@ -1,15 +1,11 @@
-import pymongo
 import os 
 from pymongo import MongoClient
 from sentence_transformers import SentenceTransformer
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.output_parsers import StrOutputParser
 from langchain_community.llms import Ollama
-import requests
-import json
 from datetime import datetime
 from dotenv import load_dotenv
-from imageai import get_caption
 
 load_dotenv()
 # mongo db details
@@ -24,8 +20,9 @@ def create_embedding(text):
     embedding = e_model.encode(text)
     return embedding
 
-def add_to_database(context):
+def add_to_database(context,googleId):
     doc = {
+        "googleId":googleId,
         "context":context,
         "embedding":create_embedding(context).tolist(),
         "createdAt":datetime.utcnow()
@@ -33,16 +30,28 @@ def add_to_database(context):
     result = collection.insert_one(doc)
 
 
-def search_similar_documents(query):
+def search_similar_documents(query,googleId):
     results = collection.aggregate([
-        {"$vectorSearch":{
-            "queryVector":create_embedding(query).tolist(),
-            "path":"embedding",
-            "numCandidates":300,
-            "limit":3,
-            "index":"default"
-        }}
+        # Atlas Search stage (without filter)
+        {
+            "$search": {
+                "index": "default",  # Your Atlas Search index name
+                "knnBeta": {
+                    "vector": create_embedding(query).tolist(),
+                    "path": "embedding",
+                    "k": 300  # Number of candidates
+                }
+            }
+        },
+        {
+            "$match": {
+                "googleId": googleId
+            }
+        },
+        {"$limit": 3}
     ])
+
+
     
     return [doc["context"] for doc in results]
 
@@ -66,13 +75,12 @@ def get_response_to_post(input_text,query):
     text=""
     i=1
     for context in input_text:
-        text="context"+str(i)+"-"+text+context+"\n"
+        text=text+"context"+str(i)+"-"+context+"\n"
         i+=1
-    print(text)
     prompt = ChatPromptTemplate.from_messages(
     [
         ("system", "You are a helpful assistant. Please respond to the user's queries with reference to the context.Select the most relevant context and answer the question. If the related context is not found, handle it with an appropriate output. Describe the situation in good words and ending with a follow up question to assist further or a giving a greeting or asking more about the happened event. Do not answer any other query related to coding or any other stuff"),
-        ("user", "Context: {context}\n\nQuestion: {query}\n\nAnswer: Based on the your memory provided, here is what i found:")
+        ("user", "Context: {context}\n\nQuestion: {query}\n\nBased on the your memory provided, here is what i found:")
     ]
     )
     llm=Ollama(model="llama3.1")
@@ -82,14 +90,14 @@ def get_response_to_post(input_text,query):
 
 
 
-def ask_model(query):
-    input_text=search_similar_documents(query)
+def ask_model(query,googleId):
+    input_text=search_similar_documents(query,googleId)
     return(get_response_to_post(input_text,query))
 
-def upload_experience(experience):
+def upload_experience(experience,googleId):
     experience=create_context(experience)
     print(experience)
-    add_to_database(experience)
+    add_to_database(experience,googleId)
     return("Experinece added!!")
 
 

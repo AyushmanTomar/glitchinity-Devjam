@@ -10,11 +10,18 @@ from pip._vendor import cachecontrol
 import google.auth.transport.requests
 from functools import wraps  # To preserve original function names
 from dotenv import load_dotenv
-
+from pymongo import MongoClient
+import json
+import pymongo
 load_dotenv()
 
 app = Flask("Google Login App")
 app.secret_key = os.getenv("GOOGLE_CLIENT_SECRET")  # For JWT signing
+
+client = MongoClient(os.getenv("MONGO_URI"))
+db=client["memory"]
+collection = db["thoughts"]
+user_collection = db["users"]
 
 auth_bp = Blueprint('auth',__name__)
 
@@ -79,6 +86,21 @@ def jwt_is_required(function):
     
     return wrapper
 
+def getCookieInfo(token):
+    if not token:
+        return {"error": "Missing token"}, 401
+    
+    try:
+        # Decode the JWT using the secret key
+        user_info = jwt.decode(token, JWT_SECRET_KEY, algorithms=["HS256"])
+        print(user_info)  # This will print the decoded user info
+        return user_info, 200  # Return the decoded user info as a dictionary
+    except jwt.ExpiredSignatureError:
+        return {"error": "Token has expired"}, 401
+    except jwt.InvalidTokenError:
+        return {"error": "Invalid token"}, 401
+
+
 # Google OAuth login route
 @auth_bp.route("/googleLogin")
 def googleLogin():
@@ -105,11 +127,15 @@ def callback():
     # Generate JWT token after successful login
     jwt_token = generate_jwt(id_info)
 
+    check = user_collection.find_one({'sub':id_info['sub']})
+    print(check)
+    if(check==None):
+       user_collection.insert_one(id_info)
     # Set JWT token in cookies
     response = make_response(redirect("/"))
     # response = make_response(redirect("/protected_area"))
     # response.set_cookie("cookie", jwt_token, httponly=True) #Use this once website out for production
-    response.set_cookie('cookie',jwt_token)
+    response.set_cookie('cookie',jwt_token, max_age=60 * 60 * 24 * 7)
     return response
 
 # Logout route
@@ -138,6 +164,15 @@ def protected_area():
 @jwt_is_required
 def check_jwt_token():
     return jsonify({"message": "JWT token is valid!"})
+
+@auth_bp.route("/printToken")
+@jwt_is_required
+def printToken():
+    token = request.cookies.get('cookie')
+    print(token)
+    return getCookieInfo(token)
+
+
 
 if __name__ == "__main__":
     app.run(debug=True)
