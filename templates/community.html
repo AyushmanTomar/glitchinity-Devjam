@@ -226,49 +226,17 @@
                     </div>
                     <div class="suggested-profiles">
                         <h3>Whome to follow?</h3>
+                        {% for profile in profiles %}
                         <div class="profile-divv profile">
                             <div class="profile-pic">
-                                <img src="{{ url_for('static', filename='images/profile.png') }}" alt="profile">
+                                <img src="{{profile['picture']}}" alt="profile" style="border-radius: 50%;">
                             </div>
                             <div class="profile-description">
-                                <b id="profile-heading">Mr. Ayushman Tomar</b>
-                                <b>Sports:</b>
-                                <p>Cricket level-32</p>
+                                <b id="profile-heading">{{profile['name']}}</b>
+                                <b>{{profile['email']}}</b>
                             </div>
                         </div>
-                        <div class="profile-divv profile">
-                            <div class="profile-pic">
-                                <img src="{{ url_for('static', filename='images/profile.png') }}" alt="profile">
-                            </div>
-                            <div class="profile-description">
-                                <b id="profile-heading">Ms. Ayushi Tomar</b>
-                                <b>Sports:</b>
-                                <p>Badminton level-32</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="events">
-                        <h3>Upcoming Events</h3>
-                        <div class="event-item">
-                            <!-- <img src="images\football-jersey-svgrepo-com.svg" alt="event"> -->
-                            <div class="event-description">
-                                <b id="event-heading">FOOTBALL MANIA</b>
-                                <b>Pool Price: </b>
-                                <p>1,00,000</p>
-                                <b>Team:</b>
-                                <p>From 1-11 members</p>
-                            </div>
-                        </div>
-                        <div class="event-item">
-                            <!-- <img src="images\stadium-svgrepo-com.svg" alt="event"> -->
-                            <div class="event-description">
-                                <b id="event-heading">CRICKET GULLY</b>
-                                <b>Pool Price: </b>
-                                <p>1,00,000</p>
-                                <b>Team:</b>
-                                <p>From 1-11 members</p>
-                            </div>
-                        </div>
+                        {% endfor %}
                     </div>
                 </div>
                 <!-- <div class="brief-button">
@@ -354,6 +322,37 @@
     <script src="{{ url_for('static', filename='js/pagemain1.js') }}"></script>
     <script src="{{ url_for('static', filename='js/community.js') }}"></script>
     "></script>
+    <script>
+        // Declare profiles by embedding JSON data properly
+        // var profiles = {{ profiles|tojson }};// Use var to avoid block-scoping issues
+
+        // // Function to render profile HTML dynamically
+        // function renderProfiles(profileArray) {
+        //     const profileContainer = document.getElementById('profile-container');
+        //     profileContainer.innerHTML = '';  // Clear previous content
+
+        //     profileArray.forEach(profile => {
+        //         // Create profile HTML
+        //         const profileHTML = `
+        //             <div class="profile-divv profile">
+        //                 <div class="profile-pic">
+        //                     <img src="${profile.profile_img_url}" alt="profile">
+        //                 </div>
+        //                 <div class="profile-description">
+        //                     <b>${profile.username}</b>
+        //                     <b>Email:</b>
+        //                     <p>${profile.email}</p>
+        //                 </div>
+        //             </div>
+        //         `;
+        //         // Append the profile HTML to the container
+        //         profileContainer.innerHTML += profileHTML;
+        //     });
+        // }
+
+        // Render the profiles
+        renderProfiles(profiles);
+    </script>
 </body>
 
 </html>

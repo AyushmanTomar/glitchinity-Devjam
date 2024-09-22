@@ -3,12 +3,25 @@ from auth import auth_bp,getCookieInfo
 import memorai
 from memorai import ask_model
 from memorai import upload_experience
-from imageai import get_caption
+# from imageai import get_caption
+from pymongo import MongoClient
+import json
 from talk import text_to_speech
 import os
 
 app = Flask(__name__)
 app.register_blueprint(auth_bp)
+
+client = MongoClient(os.getenv("MONGO_URI"))
+db=client["memory"]
+collection = db["thoughts"]
+user_collection = db["users"]
+
+JSON_FILE_PATH = 'data.json'
+
+def save_data(data):
+    with open(JSON_FILE_PATH, 'w') as json_file:
+        json.dump(data, json_file, indent=4)
 
 @app.route('/')
 def home():
@@ -16,7 +29,18 @@ def home():
 
 @app.route('/community')
 def community():
-    return render_template('community.html',error=None)
+    profiles = user_collection.find().to_list()
+    arr=[]
+    token = request.cookies.get("cookie")
+    user_info = getCookieInfo(token)
+    print(user_info)
+    for profile in profiles:
+        if(user_info[0]['sub']!=profile['sub']):
+            arr.append({'sub':profile['sub'],'name':profile['name'],'picture':profile['picture'],'email':profile['email']})
+    print(arr)
+    # save_data(jsonify({'data':profiles}))
+    return render_template('community.html',error=None,profiles=arr)
+
 
 
 @app.route('/login')
@@ -47,20 +71,20 @@ def update_():
     token = request.cookies.get('cookie')
     user_info = getCookieInfo(token)
     file = request.files['file']
-    if file:
-        print("yes bro file present!!")
-        if file.filename == '':
-            return jsonify({"memory": "File is corrupted"})
-        filepath = os.path.join("uploads", file.filename)
-        file.save(filepath)
-        caption = get_caption(filepath)
-        caption = upload_experience(caption,user_info[0]['sub'])
-        return jsonify({"memory": caption})
-    else:
-        exp = request.form['memory']
-        print(user_info)
-        exp= upload_experience(exp,user_info[0]['sub'])
-        return jsonify({'memory': exp})
+    # if file:
+    #     print("yes bro file present!!")
+    #     if file.filename == '':
+    #         return jsonify({"memory": "File is corrupted"})
+    #     filepath = os.path.join("uploads", file.filename)
+    #     file.save(filepath)
+    #     caption = get_caption(filepath)
+    #     caption = upload_experience(caption,user_info[0]['sub'])
+    #     return jsonify({"memory": caption})
+    # else:
+    exp = request.form['memory']
+    print(user_info)
+    exp= upload_experience(exp,user_info[0]['sub'])
+    return jsonify({'memory': exp})
 
 
 @app.route("/uploadimg", methods=[ "POST"])
