@@ -109,25 +109,23 @@
             </div>
             <div class="main-content">
                 <div class="feeds">
+                    {% for post in postarr %}
                     <div class="post">
                         <div class="post__avatar">
-                            <img src="{{ url_for('static', filename='images/profile.png') }}"
+                            <img src="{{post['picture']}}"
                                 alt="" />
                         </div>
                         <div class="post__body">
                             <div class="post__header">
                                 <div class="post__headerText">
                                     <h3>
-                                        Ayushman Tomar
-                                        <span class="post__headerSpecial">@ayushmMAAN</span>
+                                        {{post['name']}}
                                     </h3>
                                 </div>
                                 <div class="post__headerDescription">
-                                    <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit.</p>
+                                    <p>{{post['post']}}</p>
                                 </div>
                             </div>
-                            <img src="https://www.focus2move.com/wp-content/uploads/2020/01/Tesla-Roadster-2020-1024-03.jpg"
-                                alt="" />
                             <div class="post__footer">
                                 <span class="material-icons action0"><i class="fa-regular fa-heart"></i></span>
                                 <span class="material-icons action0"><i class="fa-regular fa-comment"></i></span>
@@ -135,84 +133,8 @@
                             </div>
                         </div>
                     </div>
-                    <div class="post">
-                        <div class="post__avatar">
-                            <img src="{{ url_for('static', filename='images/profile.png') }}"
-                                alt="" />
-                        </div>
-                        <div class="post__body">
-                            <div class="post__header">
-                                <div class="post__headerText">
-                                    <h3>
-                                        Ayushi Tomar
-                                        <span class="post__headerSpecial">@ayuiii</span>
-                                    </h3>
-                                </div>
-                                <div class="post__headerDescription">
-                                    <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit.</p>
-                                </div>
-                            </div>
-                            <img src="https://www.focus2move.com/wp-content/uploads/2020/01/Tesla-Roadster-2020-1024-03.jpg"
-                                alt="" />
-                            <div class="post__footer">
-                                <span class="material-icons action1"><i class="fa-regular fa-heart"></i></span>
-                                <span class="material-icons action1"><i class="fa-regular fa-comment"></i></span>
-                                <span class="material-icons action1"><i class="fa-regular fa-bookmark"></i></span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="post">
-                        <div class="post__avatar">
-                            <img src="{{ url_for('static', filename='images/profile.png') }}"
-                                alt="" />
-                        </div>
-                        <div class="post__body">
-                            <div class="post__header">
-                                <div class="post__headerText">
-                                    <h3>
-                                        Ayushi Tomar
-                                        <span class="post__headerSpecial">@ayuiii</span>
-                                    </h3>
-                                </div>
-                                <div class="post__headerDescription">
-                                    <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit.</p>
-                                </div>
-                            </div>
-                            <img src="https://www.focus2move.com/wp-content/uploads/2020/01/Tesla-Roadster-2020-1024-03.jpg"
-                                alt="" />
-                            <div class="post__footer">
-                                <span class="material-icons action2"><i class="fa-regular fa-heart"></i></span>
-                                <span class="material-icons action2"><i class="fa-regular fa-comment"></i></span>
-                                <span class="material-icons action2"><i class="fa-regular fa-bookmark"></i></span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="post">
-                        <div class="post__avatar">
-                            <img src="{{ url_for('static', filename='images/profile.png') }}"
-                                alt="" />
-                        </div>
-                        <div class="post__body">
-                            <div class="post__header">
-                                <div class="post__headerText">
-                                    <h3>
-                                        Ayushi Tomar
-                                        <span class="post__headerSpecial">@ayuiii</span>
-                                    </h3>
-                                </div>
-                                <div class="post__headerDescription">
-                                    <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit.</p>
-                                </div>
-                            </div>
-                            <img src="https://www.focus2move.com/wp-content/uploads/2020/01/Tesla-Roadster-2020-1024-03.jpg"
-                                alt="" />
-                            <div class="post__footer">
-                                <span class="material-icons action3"><i class="fa-regular fa-heart"></i></span>
-                                <span class="material-icons action3"><i class="fa-regular fa-comment"></i></span>
-                                <span class="material-icons action3"><i class="fa-regular fa-bookmark"></i></span>
-                            </div>
-                        </div>
-                    </div>
+                    {% endfor %}
+                    
                 </div>
                 
 

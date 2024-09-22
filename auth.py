@@ -60,7 +60,7 @@ def generate_jwt(user_info):
         'name': user_info['name'],
         'email': user_info['email'],
         'picture': user_info['picture'],  # Profile picture URL
-        'exp': datetime.utcnow() + timedelta(minutes=30)  # JWT expiration time
+        'exp': datetime.utcnow() + timedelta(hours=240)  # JWT expiration time
     }
     token = jwt.encode(payload, JWT_SECRET_KEY, algorithm='HS256')
     return token

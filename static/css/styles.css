@@ -28,6 +28,7 @@ body {
     box-shadow: 2px 0 10px rgba(0, 0, 0, 0.05);
     border-right: 1px solid #e3e8f1;
 }
+
 .sidebar {
     /* background-color: #f8faff; */
     width: 260px;
@@ -39,22 +40,26 @@ body {
     box-shadow: 2px 0 10px rgba(0, 0, 0, 0.05);
     border-right: 1px solid #e3e8f1;
 }
+
 .sidebar {
-	background: linear-gradient(-45deg,  #ef745c ,#34073d , #145277 , #65a5a1 );
-	background-size: 400% 400%;
-	animation: gradient 15s ease infinite;	
+    background: linear-gradient(-45deg, #ef745c, #34073d, #145277, #65a5a1);
+    background-size: 400% 400%;
+    animation: gradient 15s ease infinite;
 
 }
+
 @keyframes gradient {
-	0% {
-		background-position: 0% 50%;
-	}
-	50% {
-		background-position: 100% 50%;
-	}
-	100% {
-		background-position: 0% 50%;
-	}
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
 }
 
 
@@ -64,7 +69,8 @@ body {
     align-items: center;
     margin-bottom: 30px;
 }
-.logo  a h1{
+
+.logo a h1 {
     color: white;
 }
 
@@ -194,7 +200,7 @@ body {
 .settings-box:hover,
 .user-box:hover {
     background-color: #f0f4ff;
-    cursor: pointer;   
+    cursor: pointer;
 }
 
 .settings-box {
@@ -394,57 +400,61 @@ body {
     box-shadow: none;
     /* No box shadow for the textarea */
 }
-.user-box p{
-    color: white;
-}
-.user-box i{
+
+.user-box p {
     color: white;
 }
 
-.settings-box:hover i{
+.user-box i {
+    color: white;
+}
+
+.settings-box:hover i {
     color: #333;
 }
 
-.settings-box i{
+.settings-box i {
     color: white;
 }
 
-.settings-box p{
+.settings-box p {
     color: white;
 }
 
-.settings-box:hover p{
+.settings-box:hover p {
     color: #545B70;
 }
 
-.user-box:hover p{
+.user-box:hover p {
     color: #545B70;
 }
-.user-box:hover i{
+
+.user-box:hover i {
     color: #545B70;
 }
-.message{
+
+.message {
     display: block;
 }
 
 .message-box {
-	background: linear-gradient(-45deg,  #ef745c ,#34073d , #145277 , #65a5a1 );
-	background-size: 400% 400%;
-	animation: gradient 15s ease infinite;
-	
+    background: linear-gradient(-45deg, #ef745c, #34073d, #145277, #65a5a1);
+    background-size: 400% 400%;
+    animation: gradient 15s ease infinite;
+
 }
-#start-btn
-{
+
+#start-btn {
     color: white;
     transition: .2s;
 }
-#start-btn:hover
-{
+
+#start-btn:hover {
     transform: scale(1.05);
     cursor: pointer;
 }
 
-.message-box{
+.message-box {
     width: fit-content;
     text-wrap: wrap;
     height: fit-content;
@@ -452,10 +462,10 @@ body {
     padding: 10px 20px;
     border-radius: 20px;
     color: white;
-    margin-top: 10px;    
+    margin-top: 10px;
 }
 
-.bot-message{
+.bot-message {
     width: fit-content;
     text-wrap: wrap;
     height: fit-content;
@@ -465,17 +475,221 @@ body {
     color: white;
     margin-top: 10px;
     align-self: flex-end;
-    
-}
-.bot-message {
-	background: linear-gradient(-45deg, #145277 , #65a5a1,#ef745c ,#34073d  );
-	background-size: 400% 400%;
-	animation: gradient 15s ease infinite;
-	
+
 }
 
-.chat-row{
+.bot-message {
+    background: linear-gradient(-45deg, #145277, #65a5a1, #ef745c, #34073d);
+    background-size: 400% 400%;
+    animation: gradient 15s ease infinite;
+
+}
+
+.chat-row {
     width: 100%;
     display: flex;
     flex-direction: column;
+}
+
+
+
+
+/* From Uiverse.io by Nawsome */
+.loader {
+    --background: linear-gradient(135deg, #23C4F8, #275EFE);
+    --shadow: rgba(39, 94, 254, 0.28);
+    --text: #6C7486;
+    --page: rgba(255, 255, 255, 0.36);
+    --page-fold: rgba(255, 255, 255, 0.52);
+    --duration: 3s;
+    width: 200px;
+    height: 140px;
+    position: relative;
+}
+
+.loader:before,
+.loader:after {
+    --r: -6deg;
+    content: "";
+    position: absolute;
+    bottom: 8px;
+    width: 120px;
+    top: 80%;
+    box-shadow: 0 16px 12px var(--shadow);
+    transform: rotate(var(--r));
+}
+
+.loader:before {
+    left: 4px;
+}
+
+.loader:after {
+    --r: 6deg;
+    right: 4px;
+}
+
+.loader div {
+    width: 100%;
+    height: 100%;
+    border-radius: 13px;
+    position: relative;
+    z-index: 1;
+    perspective: 600px;
+    box-shadow: 0 4px 6px var(--shadow);
+    background-image: var(--background);
+}
+
+.loader div ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    position: relative;
+}
+
+.loader div ul li {
+    --r: 180deg;
+    --o: 0;
+    --c: var(--page);
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    transform-origin: 100% 50%;
+    color: var(--c);
+    opacity: var(--o);
+    transform: rotateY(var(--r));
+    -webkit-animation: var(--duration) ease infinite;
+    animation: var(--duration) ease infinite;
+}
+
+.loader div ul li:nth-child(2) {
+    --c: var(--page-fold);
+    -webkit-animation-name: page-2;
+    animation-name: page-2;
+}
+
+.loader div ul li:nth-child(3) {
+    --c: var(--page-fold);
+    -webkit-animation-name: page-3;
+    animation-name: page-3;
+}
+
+.loader div ul li:nth-child(4) {
+    --c: var(--page-fold);
+    -webkit-animation-name: page-4;
+    animation-name: page-4;
+}
+
+.loader div ul li:nth-child(5) {
+    --c: var(--page-fold);
+    -webkit-animation-name: page-5;
+    animation-name: page-5;
+}
+
+.loader div ul li svg {
+    width: 90px;
+    height: 120px;
+    display: block;
+}
+
+.loader div ul li:first-child {
+    --r: 0deg;
+    --o: 1;
+}
+
+.loader div ul li:last-child {
+    --o: 1;
+}
+
+.loader span {
+    display: block;
+    left: 0;
+    right: 0;
+    top: 100%;
+    margin-top: 20px;
+    text-align: center;
+    color: var(--text);
+}
+
+@keyframes page-2 {
+    0% {
+        transform: rotateY(180deg);
+        opacity: 0;
+    }
+
+    20% {
+        opacity: 1;
+    }
+
+    35%,
+    100% {
+        opacity: 0;
+    }
+
+    50%,
+    100% {
+        transform: rotateY(0deg);
+    }
+}
+
+@keyframes page-3 {
+    15% {
+        transform: rotateY(180deg);
+        opacity: 0;
+    }
+
+    35% {
+        opacity: 1;
+    }
+
+    50%,
+    100% {
+        opacity: 0;
+    }
+
+    65%,
+    100% {
+        transform: rotateY(0deg);
+    }
+}
+
+@keyframes page-4 {
+    30% {
+        transform: rotateY(180deg);
+        opacity: 0;
+    }
+
+    50% {
+        opacity: 1;
+    }
+
+    65%,
+    100% {
+        opacity: 0;
+    }
+
+    80%,
+    100% {
+        transform: rotateY(0deg);
+    }
+}
+
+@keyframes page-5 {
+    45% {
+        transform: rotateY(180deg);
+        opacity: 0;
+    }
+
+    65% {
+        opacity: 1;
+    }
+
+    80%,
+    100% {
+        opacity: 0;
+    }
+
+    95%,
+    100% {
+        transform: rotateY(0deg);
+    }
 }

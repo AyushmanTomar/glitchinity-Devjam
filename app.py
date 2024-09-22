@@ -1,8 +1,9 @@
 from flask import Flask,render_template,request,jsonify,redirect,url_for
 from auth import auth_bp,getCookieInfo
 import memorai
+import threading
 from memorai import ask_model
-from memorai import upload_experience
+from memorai import upload_experience,post
 from imageai import get_caption
 from pymongo import MongoClient
 import json
@@ -16,6 +17,7 @@ client = MongoClient(os.getenv("MONGO_URI"))
 db=client["memory"]
 collection = db["thoughts"]
 user_collection = db["users"]
+post_collection = db['community']
 
 JSON_FILE_PATH = 'data.json'
 
@@ -26,12 +28,6 @@ def save_data(data):
 @app.route('/')
 def home():
     token = request.cookies.get('cookie')
-    print(token)
-    if(token==None):
-        print("check")
-        return redirect(url_for("signin"))
-    token = request.cookies.get('cookie')
-    print(token)
     if(token==None):
         print("check")
         return redirect(url_for("signin"))
@@ -42,15 +38,28 @@ def home():
 def community():
     profiles = user_collection.find().to_list()
     arr=[]
+    postarr=[]
     token = request.cookies.get("cookie")
     user_info = getCookieInfo(token)
     print(user_info)
+    current_googleId = ""
     for profile in profiles:
         if(user_info[0]['sub']!=profile['sub']):
             arr.append({'sub':profile['sub'],'name':profile['name'],'picture':profile['picture'],'email':profile['email']})
-    print(arr)
+        else:
+            current_googleId=profile['sub']
+    # print(arr)
     # save_data(jsonify({'data':profiles}))
-    return render_template('community.html',error=None,profiles=arr)
+
+    result= post_collection.find().sort("createdAt",-1).to_list()
+    for post in result:
+            for item in profiles:
+                if post['googleId']==item['sub']:
+                    postarr.append({'googleId':post['googleId'],'post':post['post'],'picture':item['picture'],'name':item['name']})
+            
+    print(postarr)
+
+    return render_template('community.html',error=None,profiles=arr,postarr=postarr)
 
 
 
@@ -69,11 +78,11 @@ def recall_():
     token = request.cookies.get('cookie')
     user_info = getCookieInfo(token)
     if "/post" in query:
-        print(query)
+        memory=post(query,user_info[0]['sub'])
     else:    
         memory= ask_model(query,user_info[0]['sub'])
-        text_to_speech(memory)
-        return jsonify({'memory': memory})
+        threading.Thread(target=text_to_speech,args=(memory,)).start()
+    return jsonify({'memory': memory})
 
 # for updating the data base with new memory
 @app.route('/update')

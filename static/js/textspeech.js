@@ -30,6 +30,7 @@ recognition.onerror = function () {
 recognition.onend = function() {
     instructions.text("Voice Recognition is Off")
     startButton.text("Start Mic")
+    content = ''
     isRecognitionActive = false
 }
 
@@ -56,3 +57,4 @@ postbtn.click(function (event) {
     content="/post "
     textbox.val(content)
     })
+

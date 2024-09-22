@@ -12,6 +12,7 @@ load_dotenv()
 client = MongoClient(os.getenv("MONGO_URI"))
 db=client["memory"]
 collection = db["thoughts"]
+post_collection = db['community']
 
 
 e_model = SentenceTransformer('all-mpnet-base-v2')#all-MiniLM-L6-v2
@@ -68,6 +69,37 @@ def create_context(experience):
     output_parser=StrOutputParser()
     chain=prompt|llm2|output_parser
     return(chain.invoke({"experience":experience}))
+
+def post(query,googleId):
+    arr=search_similar_documents(query,googleId)
+    text=""
+    i=1
+    for context in arr:
+        text=text+"context"+str(i)+"-"+context+"\n"
+        i+=1
+    prompt=ChatPromptTemplate.from_messages(
+        [
+            ("system","""You are a helpful assistant to post on social media,
+             Generate contextual summary from user's perspective. keep it raw and form first person sentences to include all details.
+             Make it catchy and generate post text based on context given,Remember you are not allowed to print any extra informaion. Do not give any introduction and conclusion and headings to generated output"""),
+            ("user","{experience} give me a single descriptive text to post,Remember you are not allowed to print any extra informaion ")
+        ]
+    )
+    llm2=Ollama(model="llama3.1")
+    output_parser=StrOutputParser()
+    chain=prompt|llm2|output_parser
+    text=chain.invoke({"experience":text})
+    print(text)
+    doc = {
+        'googleId':googleId,
+        'post':text,
+        'createdAt':datetime.utcnow()
+    }
+    result = post_collection.insert_one(doc)
+    return text
+
+
+
 
 
 
